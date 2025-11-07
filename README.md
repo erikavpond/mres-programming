@@ -1,2 +1,3 @@
-# mres-biopython
-Repository for storage of MRes script
+# MRes Bioinformatics and Genomic Medicine
+
+Repository for storage of code snippets, script, files.
