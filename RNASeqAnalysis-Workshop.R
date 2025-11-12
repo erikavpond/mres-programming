@@ -44,5 +44,17 @@ counts_normalised[rownames(res_ordered)[1:5], ]
 
 rld <- rlogTransformation(dds, blind = TRUE)
 
+pcaData <- plotPCA(rld, intgroup = c("patient", "treatment"), ntop= 1000, returnData = TRUE)
+percentVar <- round(100 * attr(pcaData, "percentVar"))
+
+(pca=ggplot(pcaData, aes(PC1, PC2, colour= patient, shape= treatment)) +
+   geom_print(size= 3) +
+   theme_bw() +
+   xlab(paste0("PC1: ", percentVar[1], "% variance")) +
+   ylab(paste0("PC2: ", percentVar[2], "% variance")) +
+   coord_fixed()
+ )
+
+ggsave(pca, filname= "PCA_1000genesonly.png", width = 6, height =4)
 
 
