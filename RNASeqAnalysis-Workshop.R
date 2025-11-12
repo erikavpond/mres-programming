@@ -25,3 +25,24 @@ table(lowcov)
 
 filtered_counts <- counts_table[!lowcov, ]
 dim(filtered_counts) #result should be the 'FALSE' bit of table lowcov, meaning removal of low coverage.
+
+dds <- DESeqDataSetFromMatrix(countData = filtered_counts,
+                              colData = samples,
+                              design = ~ treatment)
+dds <- DESeq(dds)
+
+res<- results(dds, contrast = c("treatment", "treated", "control"))
+head(res)
+table(res$padj<0.1)
+table(res$padj<0.05)
+summary(res)
+
+res_ordered = res[order(res$padj), ]
+
+counts_normalised = counts(dds, normalized=TRUE)
+counts_normalised[rownames(res_ordered)[1:5], ]
+
+rld <- rlogTransformation(dds, blind = TRUE)
+
+
+
