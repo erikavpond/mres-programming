@@ -26,7 +26,7 @@ sample_dirs <- list.dirs(data_dir,
 
 # Creating function called 'load_sample'
 load_sample <- function(path) {
-  counts <- Read10X(path)
+  counts <- Read10X(path) #standard method for reading 10x scRNA data
   
   obj <- CreateSeuratObject(counts, project = basename(path))
   if (grepl("^K", basename(path), ignore.case = TRUE)) {
@@ -34,10 +34,9 @@ load_sample <- function(path) {
   } else {
     obj$condition <- "normal"}
   return(obj)
-} #Loads an individual sample, and assigns condition
+} #Loads an individual sample, and assigns condition based on known file naming style
 
 # Loads all samples in GSE163974 set by applying paths generated in sample_dirs as input
-
 samples <- lapply(sample_dirs, load_sample) #each sample is made into a seurat object, and added to a list called 'samples'
 names(samples) <- basename(sample_dirs) #each object is named according to original folder name e.g. KF1_matrix
 
