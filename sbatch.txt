@@ -1,0 +1,38 @@
+#!/bin/bash
+#SBATCH --job-name=GSE163974_pipeline
+#SBATCH --time=05:00:00
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=64G
+
+
+
+########################
+###   Load modules   ###
+########################
+
+module load apps/rstudio
+
+
+
+########################
+###    Run setup     ###
+########################
+
+echo "Running dataset setup..."
+bash setup_GSE.sh
+echo "Setup complete."
+
+
+
+########################
+###   Run analysis   ###
+########################
+
+echo "Starting R analysis..."
+Rscript GSE_analysis.R
+echo "R analysis completed."
+
+
+
+echo "=== Pipeline finished at $(date) ==="
